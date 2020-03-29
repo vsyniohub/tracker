@@ -1,0 +1,5 @@
+({
+	sampleFunction : function(component, event) {
+        
+	}
+})
