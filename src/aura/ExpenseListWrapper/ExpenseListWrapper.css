@@ -1,0 +1,20 @@
+.THIS.c-container {
+    border: 1px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+.THIS .custom-box {
+    background-color: #f4f6f9;
+    padding: 1rem;
+    border: 1px solid #d8dde6;
+}
+.THIS .fields {
+    display: inline-block;
+}
+.THIS .right-amount {
+    float: none;
+    text-align: center;
+    width: 20%;
+}
+.THIS .left-subject {
+    width: 80%;
+}

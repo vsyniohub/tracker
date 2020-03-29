@@ -1,0 +1,105 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="ExpenseListController">
+    <aura:attribute name="isSearching" type="Boolean" default="false"/>
+    <aura:attribute name="isSearchEnabled" type="Boolean" default="false"/>
+    <aura:attribute name="showNew" type="Boolean" default="false"/>
+    <aura:attribute name="myExpenses" type="List" />
+    <aura:attribute name="expenseFields" type="String[]" default="['Subject__c ', 'Amount__c']"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:flexipageRegionInfo width="Small"/>
+    <div class="slds-box slds-theme_default">
+        
+        <div class="slds-m-bottom_x-small slds-grid slds-gutters">
+            <div class="slds-col slds-button-group">
+                <lightning:buttonGroup>
+                    <lightning:buttonIcon 
+                                          aura:id="expense-add-button"
+                                          iconName="utility:add" 
+                                          onclick="{!c.handleCreate}" 
+                                          alternativeText="Add" 
+                                          title="Add" />
+                    <lightning:buttonIcon 
+                                          aura:id="expense-search-button" 
+                                          iconName="utility:filterList" 
+                                          onclick="{!c.handleSearchClicked}" 
+                                          title="Search" />
+                    
+                </lightning:buttonGroup>
+            </div>
+            <div class="slds-col">
+                <aura:renderIf isTrue="{!v.isSearchEnabled}">
+                    <lightning:input
+                                     aura:id="expense-search"
+                                     name="expense-search"
+                                     variant="label-hidden"
+                                     isLoading="{! v.issearching }"
+                                     type="search"/>
+                </aura:renderIf>
+            </div>
+        </div>
+        
+        <!--<aura:renderIf isTrue="{!v.showNew}">
+            <div class="slds-m-bottom_x-small slds-card">
+                <lightning:recordEditForm objectApiName="Expense__c">
+                    <lightning:messages />
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:inputField fieldName="Subject__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:inputField fieldName="Amount__c"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-3"/>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:buttonGroup>
+                            <lightning:buttonIcon 
+                                                  class="slds-m-around_xx-small" 
+                                                  type="submit" 
+                                                  iconName="utility:enter" 
+                                                  onClick="{!c.handleCreate}"/>
+                            </lightning:buttonGroup>
+                        </div>
+                    </div>
+                </lightning:recordEditForm>
+                
+            </div>
+        </aura:renderIf>-->
+        
+        <div class="c-container">
+            <lightning:layout multipleRows="true">
+                <aura:iteration items="{!v.myExpenses}" var="expense">
+                    <lightning:layoutItem size="12">
+                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
+                            <lightning:layout multipleRows="false" horizontalAlign="spread">
+                                
+                                <lightning:layoutItem flexibility="auto" alignmentBump="left">
+                                    <div class="slds-m-around_x-small slds-text-heading_medium">
+                                        <div class="slds-float_left ">
+                                        	{!expense.Subject__c}
+                                        </div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem flexibility="auto" alignmentBump="left">
+                                    <div class="slds-m-around_x-small slds-text-heading_medium">
+                                        <div class="slds-grid slds-grid_align-space">
+                                            <div class="slds-col">
+                                                <span><lightning:formattedNumber value="{!expense.Amount__c}" maximumFractionDigits="2" minimumFractionDigits="2"/></span>
+                                            </div>
+                                            <div class="slds-col">
+                                                &nbsp;PLN
+                                            </div>
+                                        </div>
+                                    </div>
+                                </lightning:layoutItem>
+                                
+                            </lightning:layout>
+                        </div>
+                    </lightning:layoutItem>
+                </aura:iteration>
+            </lightning:layout>
+        </div>
+        
+    </div>
+</aura:component>
