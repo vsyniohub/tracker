@@ -3,11 +3,16 @@
     <aura:attribute name="isSearchEnabled" type="Boolean" default="false"/>
     <aura:attribute name="showNew" type="Boolean" default="false"/>
     <aura:attribute name="areRecords" type="Boolean" default="false"/>
+    <aura:attribute name="recordAmount" type="Integer" default="0"/>
+    <aura:attribute name="startPosition" type="Integer" default="0"/>
+    <aura:attribute name="endPosition" type="Integer" default="0"/>
     <aura:attribute name="myExpenses" type="List" />
+    <aura:attribute name="myExpensesToShow" type="List" />
     <aura:attribute name="expenseFields" type="String[]" default="['Subject__c ', 'Amount__c']"/>
     
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <lightning:flexipageRegionInfo width="Small"/>
+
     <div class="slds-box slds-theme_default">
         
         <div class="slds-m-bottom_x-small slds-grid slds-gutters">
@@ -39,44 +44,15 @@
             </div>
         </div>
         
-        <!--<aura:renderIf isTrue="{!v.showNew}">
-            <div class="slds-m-bottom_x-small slds-card">
-                <lightning:recordEditForm objectApiName="Expense__c">
-                    <lightning:messages />
-                    <div class="slds-grid">
-                        <div class="slds-col slds-size_2-of-3">
-                            <lightning:inputField fieldName="Subject__c"/>
-                        </div>
-                        <div class="slds-col slds-size_1-of-3">
-                            <lightning:inputField fieldName="Amount__c"/>
-                        </div>
-                    </div>
-                    <div class="slds-grid">
-                        <div class="slds-col slds-size_2-of-3"/>
-                        <div class="slds-col slds-size_1-of-3">
-                            <lightning:buttonGroup>
-                            <lightning:buttonIcon 
-                                                  class="slds-m-around_xx-small" 
-                                                  type="submit" 
-                                                  iconName="utility:enter" 
-                                                  onClick="{!c.handleCreate}"/>
-                            </lightning:buttonGroup>
-                        </div>
-                    </div>
-                </lightning:recordEditForm>
-                
-            </div>
-        </aura:renderIf>-->
-        
         <div class="c-container">
             <lightning:layout multipleRows="true">
-                <aura:iteration items="{!v.myExpenses}" var="expense">
+                <aura:iteration items="{!v.myExpensesToShow}" var="expense">
                     <lightning:layoutItem size="12">
                             <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
                                 <lightning:layout multipleRows="false" horizontalAlign="spread">
-                                    <lightning:layoutItem flexibility="auto" alignmentBump="left">
-                                        <div class="slds-m-around_x-small slds-text-heading_medium">
-                                            <div class="slds-float_left ">
+                                    <lightning:layoutItem size="8">
+                                        <div class="slds-m-around_x-small slds-text-heading_medium ">
+                                            <div class="slds-truncate">
                                                 {!expense.Subject__c}
                                             </div>
                                         </div>
@@ -97,6 +73,28 @@
                             </div>
                     </lightning:layoutItem>
                 </aura:iteration>
+            </lightning:layout>
+            <lightning:layout multipleRows="false">
+                <lightning:layoutItem size="6">
+                        <lightning:buttonStateful
+                            state="{! (v.startPosition - 8) > 0 }"
+                            variant="brand"
+                            labelWhenOff="Follow"
+                            labelWhenOn="Following"
+                            labelWhenHover="Unfollow"
+                            onclick="{! c.expensesPrevious }"
+                        /> 
+                </lightning:layoutItem>
+                    <lightning:layoutItem size="6">
+                        <lightning:buttonStateful
+                        state="{true}"
+                        variant="brand"
+                        labelWhenOff="Follow"
+                        labelWhenOn="Following"
+                        labelWhenHover="Unfollow"
+                        onclick="{! c.expensesNext }"
+                    />
+                </lightning:layoutItem>
             </lightning:layout>
         </div>
         
