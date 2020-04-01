@@ -1,0 +1,5 @@
+.THIS {
+}
+.THIS .expense-item:active {
+  background-color: yellow;
+}

@@ -2,6 +2,7 @@
     <aura:attribute name="isSearching" type="Boolean" default="false"/>
     <aura:attribute name="isSearchEnabled" type="Boolean" default="false"/>
     <aura:attribute name="showNew" type="Boolean" default="false"/>
+    <aura:attribute name="areRecords" type="Boolean" default="false"/>
     <aura:attribute name="myExpenses" type="List" />
     <aura:attribute name="expenseFields" type="String[]" default="['Subject__c ', 'Amount__c']"/>
     
@@ -71,31 +72,29 @@
             <lightning:layout multipleRows="true">
                 <aura:iteration items="{!v.myExpenses}" var="expense">
                     <lightning:layoutItem size="12">
-                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
-                            <lightning:layout multipleRows="false" horizontalAlign="spread">
-                                
-                                <lightning:layoutItem flexibility="auto" alignmentBump="left">
-                                    <div class="slds-m-around_x-small slds-text-heading_medium">
-                                        <div class="slds-float_left ">
-                                        	{!expense.Subject__c}
-                                        </div>
-                                    </div>
-                                </lightning:layoutItem>
-                                <lightning:layoutItem flexibility="auto" alignmentBump="left">
-                                    <div class="slds-m-around_x-small slds-text-heading_medium">
-                                        <div class="slds-grid slds-grid_align-space">
-                                            <div class="slds-col">
-                                                <span><lightning:formattedNumber value="{!expense.Amount__c}" maximumFractionDigits="2" minimumFractionDigits="2"/></span>
-                                            </div>
-                                            <div class="slds-col">
-                                                &nbsp;PLN
+                            <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
+                                <lightning:layout multipleRows="false" horizontalAlign="spread">
+                                    <lightning:layoutItem flexibility="auto" alignmentBump="left">
+                                        <div class="slds-m-around_x-small slds-text-heading_medium">
+                                            <div class="slds-float_left ">
+                                                {!expense.Subject__c}
                                             </div>
                                         </div>
-                                    </div>
-                                </lightning:layoutItem>
-                                
-                            </lightning:layout>
-                        </div>
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem flexibility="auto" alignmentBump="left">
+                                        <div class="slds-m-around_x-small slds-text-heading_medium">
+                                            <div class="slds-grid slds-grid_align-space">
+                                                <div class="slds-col">
+                                                    <span><lightning:formattedNumber value="{!expense.Amount__c}" maximumFractionDigits="2" minimumFractionDigits="2"/></span>
+                                                </div>
+                                                <div class="slds-col">
+                                                    &nbsp;PLN
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </lightning:layoutItem>
+                                </lightning:layout>
+                            </div>
                     </lightning:layoutItem>
                 </aura:iteration>
             </lightning:layout>

@@ -2,9 +2,6 @@
     doInit : function(component, event, helper) {
         helper.doInit(component, event);
     },
-    expenseOnClick : function(component, event, helper) {
-        var idx = event.currentTarget.getAttribute("id");
-    },
     handleCreate : function(component, event, helper) {
         var createRecordEvent = $A.get("e.force:createRecord");
         createRecordEvent.setParams({
