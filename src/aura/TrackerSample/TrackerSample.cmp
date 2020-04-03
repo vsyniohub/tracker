@@ -3,4 +3,32 @@
     <!--
         Any markup can be put here for mock
     -->
+     <!--<aura:renderIf isTrue="{!v.showNew}">
+            <div class="slds-m-bottom_x-small slds-card">
+                <lightning:recordEditForm objectApiName="Expense__c">
+                    <lightning:messages />
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-3">
+                            <lightning:inputField fieldName="Subject__c"/>
+                        </div>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:inputField fieldName="Amount__c"/>
+                        </div>
+                    </div>
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_2-of-3"/>
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning:buttonGroup>
+                            <lightning:buttonIcon 
+                                                  class="slds-m-around_xx-small" 
+                                                  type="submit" 
+                                                  iconName="utility:enter" 
+                                                  onClick="{!c.handleCreate}"/>
+                            </lightning:buttonGroup>
+                        </div>
+                    </div>
+                </lightning:recordEditForm>
+                
+            </div>
+        </aura:renderIf>-->
 </aura:component>

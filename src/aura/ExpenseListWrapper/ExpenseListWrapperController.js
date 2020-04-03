@@ -1,9 +1,7 @@
 ({
     doInit : function(component, event, helper) {
+        component.set("v.isInit", true);
         helper.doInit(component, event);
-    },
-    expenseOnClick : function(component, event, helper) {
-        var idx = event.currentTarget.getAttribute("id");
     },
     handleCreate : function(component, event, helper) {
         var createRecordEvent = $A.get("e.force:createRecord");
@@ -23,5 +21,12 @@
             }
         }
         component.set("v.isSearchEnabled", !isSearchEnabled);
+    },
+    clickNext : function(component, event, helper) {
+        helper.clickNext(component);
+    },
+    clickPrevious : function(component, event, helper) {
+        component.set("v.isInit", true);
+        helper.clickPrevious(component);
     }
 })
