@@ -16,6 +16,7 @@
                     component.set("v.recordAmount", expenses.length);
                     component.set("v.endPosition", endPositionDefault);
                     this.cleaveOutputList(component);
+                    this.checkNextPrevious(component);
                 }
             } else if (state === "ERROR") {
                 this.handleError(response.getError());
@@ -47,6 +48,44 @@
             } else {
                 component.set("v.myExpensesToShow", myExpenses);
             }
+        }
+    },
+    clickPrevious : function(component) {
+        if (component.get("v.startPosition") - 8 > 0) {
+            component.set("v.startPosition", component.get("v.startPosition") - 8);
+            component.set("v.endPosition", component.get("v.endPosition") - 8);
+        } else {
+            component.set("v.startPosition", 0);
+            component.set("v.endPosition", 8);
+        }
+
+        this.cleaveOutputList(component);
+        this.checkNextPrevious(component);
+    },
+    clickNext : function(component) {
+        if (component.get("v.endPosition") + 8 >= component.get("v.recordAmount")) {
+            component.set("v.endPosition", component.get("v.recordAmount"));
+        } else {
+            component.set("v.endPosition", component.get("v.endPosition") + 8);
+        }
+        component.set("v.startPosition", component.get("v.startPosition") + 8);
+        
+        this.cleaveOutputList(component);
+        this.checkNextPrevious(component);
+    },
+    checkNextPrevious : function(component) {
+        var start   = component.get("v.startPosition");
+        var end     = component.get("v.endPosition");
+
+        if (start <= 0) {
+            component.set("v.hasPrevious", false);
+        } else {
+            component.set("v.hasPrevious", true);
+        }
+        if (end >= component.get("v.recordAmount")) {
+            component.set("v.hasNext", false);
+        } else {
+            component.set("v.hasNext", true);
         }
     }
 })

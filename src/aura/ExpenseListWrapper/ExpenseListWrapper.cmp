@@ -1,8 +1,11 @@
 <aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="ExpenseListController">
-    <aura:attribute name="isSearching" type="Boolean" default="false"/>
-    <aura:attribute name="isSearchEnabled" type="Boolean" default="false"/>
-    <aura:attribute name="showNew" type="Boolean" default="false"/>
-    <aura:attribute name="areRecords" type="Boolean" default="false"/>
+    <aura:attribute type="Boolean" name="isSearching" default="false"/>
+    <aura:attribute type="Boolean" name="isSearchEnabled" default="false"/>
+    <aura:attribute type="Boolean" name="showNew" default="false"/>
+    <aura:attribute type="Boolean" name="areRecords" default="false"/>
+    <aura:attribute type="Boolean" name="hasNext" default="true"/>
+    <aura:attribute type="Boolean" name="hasPrevious" default="true"/>
+    <aura:attribute type="Boolean" name="isInit" default="false"/>
     <aura:attribute name="recordAmount" type="Integer" default="0"/>
     <aura:attribute name="startPosition" type="Integer" default="0"/>
     <aura:attribute name="endPosition" type="Integer" default="0"/>
@@ -50,7 +53,7 @@
                     <lightning:layoutItem size="12">
                             <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
                                 <lightning:layout multipleRows="false" horizontalAlign="spread">
-                                    <lightning:layoutItem size="8">
+                                    <lightning:layoutItem size="7">
                                         <div class="slds-m-around_x-small slds-text-heading_medium ">
                                             <div class="slds-truncate">
                                                 {!expense.Subject__c}
@@ -74,29 +77,42 @@
                     </lightning:layoutItem>
                 </aura:iteration>
             </lightning:layout>
-            <lightning:layout multipleRows="false">
-                <lightning:layoutItem size="6">
-                        <lightning:buttonStateful
-                            state="{! (v.startPosition - 8) > 0 }"
-                            variant="brand"
-                            labelWhenOff="Follow"
-                            labelWhenOn="Following"
-                            labelWhenHover="Unfollow"
-                            onclick="{! c.expensesPrevious }"
-                        /> 
-                </lightning:layoutItem>
-                    <lightning:layoutItem size="6">
-                        <lightning:buttonStateful
-                        state="{true}"
-                        variant="brand"
-                        labelWhenOff="Follow"
-                        labelWhenOn="Following"
-                        labelWhenHover="Unfollow"
-                        onclick="{! c.expensesNext }"
-                    />
-                </lightning:layoutItem>
-            </lightning:layout>
+            
         </div>
-        
+        <aura:renderIf isTrue="{!v.recordAmount > 8}">
+            <div class="slds-grid slds-grid_align-center">
+                <div class="slds-col slds-m-around_x-small">
+                    <span>
+                        <lightning:buttonIcon 
+                            iconName="utility:chevronleft" 
+                            onclick = "{!c.clickPrevious}"
+                            variant="brand" 
+                            alternativeText="Previous" 
+                            disabled="{! not(v.hasPrevious)}"
+                            title="Previous" />
+                    </span>
+                </div>
+                <div class="slds-col slds-m-around_x-small">
+                    <span>
+                        <lightning:buttonIcon 
+                            iconName="utility:chevronright" 
+                            onclick = "{!c.clickNext}"
+                            variant="brand" 
+                            alternativeText="Next" 
+                            disabled="{! not(v.hasNext)}"
+                            title="Next" />
+                    </span>
+                </div>
+            </div>
+            <!--
+            <p>{!v.hasNext}</p>
+            <p>{!not(v.hasNext)}</p>
+            <p>{!v.hasPrevious}</p>
+            <p>{!not(v.hasPrevious)}</p>
+            <p>{!v.recordAmount}</p>
+            <p>{!v.startPosition}</p>
+            <p>{!v.endPosition}</p>
+            -->
+        </aura:renderIf>
     </div>
 </aura:component>
