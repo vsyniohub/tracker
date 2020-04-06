@@ -31,6 +31,7 @@
                                           aura:id="expense-search-button" 
                                           iconName="utility:filterList" 
                                           onclick="{!c.handleSearchClicked}" 
+                                          alternativeText="Search"
                                           title="Search" />
                     
                 </lightning:buttonGroup>
@@ -104,15 +105,6 @@
                     </span>
                 </div>
             </div>
-            <!--
-            <p>{!v.hasNext}</p>
-            <p>{!not(v.hasNext)}</p>
-            <p>{!v.hasPrevious}</p>
-            <p>{!not(v.hasPrevious)}</p>
-            <p>{!v.recordAmount}</p>
-            <p>{!v.startPosition}</p>
-            <p>{!v.endPosition}</p>
-            -->
         </aura:renderIf>
     </div>
 </aura:component>
