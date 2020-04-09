@@ -32,10 +32,10 @@
                         header: "Edit Expense",
                         body: modalBody,
                         showCloseButton: false,
-                        cssClass: "mymodal",
+                        cssClass: "class",
                         closeCallback: function() {
                             component.find("overlayLib").notifyClose();
-                            $A.get('e.force:refreshView').fire();
+                            //$A.get('e.force:refreshView').fire();
                         }
                    })
                 }
