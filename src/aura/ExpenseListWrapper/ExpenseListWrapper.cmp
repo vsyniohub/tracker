@@ -1,5 +1,6 @@
 <aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="ExpenseListController">
     <aura:attribute type="Boolean" name="isSearching" default="false"/>
+    <aura:attribute type="Boolean" name="isEditing" default="false"/>
     <aura:attribute type="Boolean" name="isSearchEnabled" default="false"/>
     <aura:attribute type="Boolean" name="showNew" default="false"/>
     <aura:attribute type="Boolean" name="areRecords" default="false"/>
@@ -7,104 +8,113 @@
     <aura:attribute type="Boolean" name="hasPrevious" default="true"/>
     <aura:attribute type="Boolean" name="isInit" default="false"/>
     <aura:attribute name="recordAmount" type="Integer" default="0"/>
+    <!--<aura:attribute name="editId" type="String" default=""/>-->
     <aura:attribute name="startPosition" type="Integer" default="0"/>
     <aura:attribute name="endPosition" type="Integer" default="0"/>
     <aura:attribute name="myExpenses" type="List" />
     <aura:attribute name="myExpensesToShow" type="List" />
     <aura:attribute name="expenseFields" type="String[]" default="['Subject__c ', 'Amount__c']"/>
-    
+
+    <lightning:overlayLibrary aura:id="overlayLib"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     <lightning:flexipageRegionInfo width="Small"/>
 
     <div class="slds-box slds-theme_default">
-        
+    
         <div class="slds-m-bottom_x-small slds-grid slds-gutters">
             <div class="slds-col slds-button-group">
                 <lightning:buttonGroup>
                     <lightning:buttonIcon 
-                                          aura:id="expense-add-button"
-                                          iconName="utility:add" 
-                                          onclick="{!c.handleCreate}" 
-                                          alternativeText="Add" 
-                                          title="Add" />
+                                        aura:id="expense-add-button"
+                                        iconName="utility:add" 
+                                        onclick="{!c.handleCreate}" 
+                                        alternativeText="Add" 
+                                        title="Add" />
                     <lightning:buttonIcon 
-                                          aura:id="expense-search-button" 
-                                          iconName="utility:filterList" 
-                                          onclick="{!c.handleSearchClicked}" 
-                                          alternativeText="Search"
-                                          title="Search" />
+                                        aura:id="expense-search-button" 
+                                        iconName="utility:filterList" 
+                                        onclick="{!c.handleSearchClicked}" 
+                                        alternativeText="Search"
+                                        title="Search" />
                     
                 </lightning:buttonGroup>
             </div>
             <div class="slds-col">
                 <aura:renderIf isTrue="{!v.isSearchEnabled}">
                     <lightning:input
-                                     aura:id="expense-search"
-                                     name="expense-search"
-                                     variant="label-hidden"
-                                     isLoading="{! v.issearching }"
-                                     type="search"/>
+                                    aura:id="expense-search"
+                                    name="expense-search"
+                                    variant="label-hidden"
+                                    isLoading="{! v.issearching }"
+                                    type="search"/>
                 </aura:renderIf>
             </div>
         </div>
-        
+        <div class="c-container">
+
+        </div>
         <div class="c-container">
             <lightning:layout multipleRows="true">
                 <aura:iteration items="{!v.myExpensesToShow}" var="expense">
                     <lightning:layoutItem size="12">
-                            <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
-                                <lightning:layout multipleRows="false" horizontalAlign="spread">
-                                    <lightning:layoutItem size="7">
-                                        <div class="slds-m-around_x-small slds-text-heading_medium ">
-                                            <div class="slds-truncate">
-                                                {!expense.Subject__c}
+                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
+                            <lightning:layout multipleRows="false" horizontalAlign="spread">
+                                <lightning:layoutItem size="6">
+                                    <div class="slds-m-around_x-small slds-text-title ">
+                                        <div class="slds-truncate">
+                                            {!expense.Subject__c}
+                                        </div>
+                                    </div>
+                                </lightning:layoutItem>
+                                <lightning:layoutItem flexibility="auto" alignmentBump="left">
+                                    <div class="slds-m-around_x-small slds-text-title">
+                                        <div class="slds-grid slds-grid_align-space">
+                                            <div class="slds-col">
+                                                <span><lightning:formattedNumber value="{!expense.Amount__c}" maximumFractionDigits="2" minimumFractionDigits="2"/></span>
+                                            </div>
+                                            <div class="slds-col">
+                                                &nbsp;PLN
                                             </div>
                                         </div>
-                                    </lightning:layoutItem>
-                                    <lightning:layoutItem flexibility="auto" alignmentBump="left">
-                                        <div class="slds-m-around_x-small slds-text-heading_medium">
-                                            <div class="slds-grid slds-grid_align-space">
-                                                <div class="slds-col">
-                                                    <span><lightning:formattedNumber value="{!expense.Amount__c}" maximumFractionDigits="2" minimumFractionDigits="2"/></span>
-                                                </div>
-                                                <div class="slds-col">
-                                                    &nbsp;PLN
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </lightning:layoutItem>
-                                </lightning:layout>
-                            </div>
+                                    </div>
+                                </lightning:layoutItem>
+                            </lightning:layout>
+                        </div>
                     </lightning:layoutItem>
                 </aura:iteration>
-            </lightning:layout>
-            
+            </lightning:layout>  
         </div>
-        <aura:renderIf isTrue="{!v.recordAmount > 8}">
-            <div class="slds-grid slds-grid_align-center">
-                <div class="slds-col slds-m-around_x-small">
-                    <span>
-                        <lightning:buttonIcon 
-                            iconName="utility:chevronleft" 
-                            onclick = "{!c.clickPrevious}"
-                            variant="brand" 
-                            alternativeText="Previous" 
-                            disabled="{! not(v.hasPrevious)}"
-                            title="Previous" />
-                    </span>
+
+        <div>
+            <aura:renderIf isTrue="{!v.recordAmount > 8}">
+                <div class="slds-grid slds-grid_align-center">
+                    <div class="slds-col slds-m-around_x-small">
+                        <span>
+                            <lightning:buttonIcon 
+                                iconName="utility:chevronleft" 
+                                onclick = "{!c.clickPrevious}"
+                                variant="brand" 
+                                alternativeText="Previous" 
+                                disabled="{! not(v.hasPrevious)}"
+                                title="Previous" />
+                        </span>
+                    </div>
+                    <div class="slds-col slds-m-around_x-small">
+                        <span>
+                            <lightning:buttonIcon 
+                                iconName="utility:chevronright" 
+                                onclick = "{!c.clickNext}"
+                                variant="brand" 
+                                alternativeText="Next" 
+                                disabled="{! not(v.hasNext)}"
+                                title="Next" />
+                        </span>
+                    </div>
                 </div>
-                <div class="slds-col slds-m-around_x-small">
-                    <span>
-                        <lightning:buttonIcon 
-                            iconName="utility:chevronright" 
-                            onclick = "{!c.clickNext}"
-                            variant="brand" 
-                            alternativeText="Next" 
-                            disabled="{! not(v.hasNext)}"
-                            title="Next" />
-                    </span>
-                </div>
-            </div>
-        </aura:renderIf>
+            </aura:renderIf>
+        </div>
+      
+        
     </div>
 </aura:component>
