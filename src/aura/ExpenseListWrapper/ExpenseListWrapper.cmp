@@ -58,28 +58,34 @@
             <lightning:layout multipleRows="true">
                 <aura:iteration items="{!v.myExpensesToShow}" var="expense">
                     <lightning:layoutItem size="12">
-                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-card">
-                            <lightning:layout multipleRows="false" horizontalAlign="spread">
-                                <lightning:layoutItem size="6">
-                                    <div class="slds-m-around_x-small slds-text-title ">
-                                        <div class="slds-truncate">
-                                            {!expense.Subject__c}
-                                        </div>
+                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-box slds-box_x-small slds-theme_default">
+                            <div class="slds-grid slds-wrap slds-grid_align-center slds-grid_vertical-align-center">
+                                
+                                <div class="slds-col slds-size_8-of-12 slds-large-size_6-of-12 slds-border_right">
+                                    <div class="slds-truncate">
+                                        {!expense.Subject__c}
                                     </div>
-                                </lightning:layoutItem>
-                                <lightning:layoutItem flexibility="auto" alignmentBump="left">
-                                    <div class="slds-m-around_x-small slds-text-title">
-                                        <div class="slds-grid slds-grid_align-space">
-                                            <div class="slds-col">
-                                                <span><lightning:formattedNumber value="{!expense.Amount__c}" maximumFractionDigits="2" minimumFractionDigits="2"/></span>
-                                            </div>
-                                            <div class="slds-col">
-                                                &nbsp;PLN
-                                            </div>
-                                        </div>
+                                </div>
+                                <div class="slds-col slds-show_small slds-size_2-of-12 slds-border_right">
+                                    <div class="center-align">
+                                        <lightning:formattedDateTime value="{!expense.Expense_Date__c}" />
                                     </div>
-                                </lightning:layoutItem>
-                            </lightning:layout>
+                                </div>
+                                <div class="slds-col slds-show_small slds-size_2-of-12 slds-border_right">
+                                    <div class="center-align">
+                                        {!expense.Type__c}
+                                    </div>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12 slds-large-size_2-of-12">
+                                    <div class="right-align">
+                                        <lightning:formattedNumber 
+                                            value="{!expense.Amount__c}" 
+                                            maximumFractionDigits="2" 
+                                            minimumFractionDigitcos="2"/>&nbsp;PLN
+                                    </div>
+                                </div>
+                                
+                            </div>   
                         </div>
                     </lightning:layoutItem>
                 </aura:iteration>

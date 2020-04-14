@@ -21,4 +21,14 @@
 }
 .THIS .expense-item:active {
     background-color: yellow;
-  }
+}
+.THIS .center-align {
+    text-align: center;
+    height: 100%;
+}
+.THIS .left-align {
+    text-align: left;
+}
+.THIS .right-align {
+    text-align: right;
+}
