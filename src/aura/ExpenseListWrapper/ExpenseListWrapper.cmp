@@ -58,7 +58,7 @@
             <lightning:layout multipleRows="true">
                 <aura:iteration items="{!v.myExpensesToShow}" var="expense">
                     <lightning:layoutItem size="12">
-                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-box slds-box_x-small slds-theme_default">
+                        <div onclick="{!c.expenseOnClick}" id="{!expense.Id}" class="slds-box slds-box_x-small slds-theme_default hovered-Div">
                             <div class="slds-grid slds-wrap slds-grid_align-center slds-grid_vertical-align-center">
                                 
                                 <div class="slds-col slds-size_8-of-12 slds-large-size_6-of-12 slds-border_right">
