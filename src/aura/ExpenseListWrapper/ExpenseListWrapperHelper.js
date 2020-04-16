@@ -10,11 +10,16 @@
             var state = response.getState();
             if (state === "SUCCESS") {
                 var expenses = response.getReturnValue();
-                if (expenses.length > 0) {
+                var count = expenses.length;
+                if (count > 0) {
                     component.set("v.myExpenses", expenses);
                     component.set("v.areRecords", true);
                     component.set("v.recordAmount", expenses.length);
-                    component.set("v.endPosition", endPositionDefault);
+                    if (count > endPositionDefault) {
+                        component.set("v.endPosition", endPositionDefault);
+                    } else {
+                        component.set("v.endPosition", count);
+                    }
                     this.cleaveOutputList(component);
                     this.checkNextPrevious(component);
                 }
@@ -87,5 +92,48 @@
         } else {
             component.set("v.hasNext", true);
         }
+    },
+    searchExpense : function(component) {
+        var inputValue = component.find("expense-search").get("v.value");
+        if (inputValue == null || inputValue == "") {
+            this.doInit(component);
+        } else {
+            this.doSearch(component);
+        }
+    },
+    doSearch : function(component) {
+        var endPositionDefault = 8;
+        var action = component.get("c.getMyExpensesSearch");
+        
+        action.setParams({
+            "inputString" : component.find("expense-search").get("v.value")
+        });
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                var expenses = response.getReturnValue();
+                var count = expenses.length;
+                if (count > 0) {
+                    console.log(expenses.length);
+                    component.set("v.isSearching", false);
+                    component.set("v.myExpenses", expenses);
+                    component.set("v.areRecords", true);
+                    component.set("v.recordAmount", expenses.length);
+                    if (count > endPositionDefault) {
+                        component.set("v.endPosition", endPositionDefault);
+                    } else {
+                        component.set("v.endPosition", count);
+                    }
+                    this.cleaveOutputList(component);
+                    this.checkNextPrevious(component);
+                }
+            } else if (state === "ERROR") {
+                component.set("v.isSearching", false);
+                this.handleError(response.getError());
+            } else if (state == "RUNNING") {
+                component.set("v.isSearching", true);
+            }
+        });
+        $A.enqueueAction(action);
     }
 })
