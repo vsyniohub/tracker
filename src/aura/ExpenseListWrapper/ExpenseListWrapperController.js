@@ -47,5 +47,8 @@
     clickPrevious : function(component, event, helper) {
         component.set("v.isInit", true);
         helper.clickPrevious(component);
+    },
+    searchChanged : function(component, event, helper) {
+        helper.searchExpense(component);
     }
 })

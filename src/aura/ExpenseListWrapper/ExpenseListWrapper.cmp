@@ -8,7 +8,6 @@
     <aura:attribute type="Boolean" name="hasPrevious" default="true"/>
     <aura:attribute type="Boolean" name="isInit" default="false"/>
     <aura:attribute name="recordAmount" type="Integer" default="0"/>
-    <!--<aura:attribute name="editId" type="String" default=""/>-->
     <aura:attribute name="startPosition" type="Integer" default="0"/>
     <aura:attribute name="endPosition" type="Integer" default="0"/>
     <aura:attribute name="myExpenses" type="List" />
@@ -46,7 +45,8 @@
                                     aura:id="expense-search"
                                     name="expense-search"
                                     variant="label-hidden"
-                                    isLoading="{! v.issearching }"
+                                    isLoading="{! v.isSearching }"
+                                    onchange="{!c.searchChanged}"
                                     type="search"/>
                 </aura:renderIf>
             </div>
