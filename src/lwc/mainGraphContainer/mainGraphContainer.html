@@ -1,0 +1,31 @@
+<template>
+    <div class="slds-box slds-theme_default c-container">
+        <div class="slds-button-group slds-m-bottom_x-small">
+            <lightning-button-group>
+                <lightning-button-icon 
+                    variant="border-filled"
+                    icon-name="utility:dayview" 
+                    selected={dailyChartSelected} 
+                    onclick={dailyChartSelected} 
+                    alternative-text="Refresh"></lightning-button-icon>
+                <lightning-button-icon
+                    variant="border-filled"
+                    icon-name="utility:weeklyview" 
+                    selected={weeklyChartSelected} 
+                    onclick={weeklyChartSelected} 
+                    alternative-text="Edit"></lightning-button-icon>
+                <lightning-button-icon
+                    variant="border-filled"
+                    icon-name="utility:monthlyview" 
+                    selected={monthlyChartSelected} 
+                    onclick={monthlyChartSelected} 
+                    alternative-text="Save"></lightning-button-icon>
+            </lightning-button-group>
+        </div>
+        <div class="slds-box slds-box_x-small slds-theme_default">
+            <p>
+                Graphs Will be Here
+            </p>
+        </div>
+    </div>
+</template>
