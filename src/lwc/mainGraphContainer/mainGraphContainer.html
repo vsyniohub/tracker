@@ -1,31 +1,29 @@
 <template>
-    <div class="slds-box slds-theme_default c-container">
+    <div class="slds-box slds-theme_default c-container" style="height: 552px;">
         <div class="slds-button-group slds-m-bottom_x-small">
             <lightning-button-group>
                 <lightning-button-icon 
                     variant="border-filled"
                     icon-name="utility:dayview" 
-                    selected={dailyChartSelected} 
+                    selected={dailyChartSelectedState} 
                     onclick={dailyChartSelected} 
                     alternative-text="Refresh"></lightning-button-icon>
                 <lightning-button-icon
                     variant="border-filled"
                     icon-name="utility:weeklyview" 
-                    selected={weeklyChartSelected} 
+                    selected 
                     onclick={weeklyChartSelected} 
                     alternative-text="Edit"></lightning-button-icon>
                 <lightning-button-icon
                     variant="border-filled"
                     icon-name="utility:monthlyview" 
-                    selected={monthlyChartSelected} 
+                    selected={monthlyChartSelectedState} 
                     onclick={monthlyChartSelected} 
                     alternative-text="Save"></lightning-button-icon>
             </lightning-button-group>
         </div>
         <div class="slds-box slds-box_x-small slds-theme_default">
-            <p>
-                Graphs Will be Here
-            </p>
+            <canvas  lwc:dom="manual" id="pie-chart" class="pie-chart" width="600" height="300"></canvas>
         </div>
     </div>
 </template>

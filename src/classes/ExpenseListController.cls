@@ -18,11 +18,19 @@ public class ExpenseListController {
         'YEAR'  => 'THIS_YEAR'
     };
 
+    /* *********************************
+    ** Method:   getMyExpenses
+    ** Description: 
+    ** ********************************* */
     @AuraEnabled
     public static List<Expense__c > getMyExpenses() {
         return Database.query(MAIN_QUERY + SPACE + ORDER_BY);
     }
 
+    /* *********************************
+    ** Method:   getMyExpensesSearch
+    ** Description: 
+    ** ********************************* */
     @AuraEnabled
     public static List<Expense__c > getMyExpensesSearch(String inputString) {
         String finalQuery;
@@ -43,10 +51,15 @@ public class ExpenseListController {
         return Database.query(finalQuery);
     }
 
-    @AuraEnabled
+    /* *********************************
+    ** Method:   getAggregatedExpenses
+    ** Description: 
+    ** ********************************* */
+    @AuraEnabled(cacheable=true)
     public static List<TrackerUtility.ChartExpenseData> getAggregatedExpenses(String period) {
+        System.debug('Reached APEX ' + period);
         List<TrackerUtility.ChartExpenseData> dataSet = new List<TrackerUtility.ChartExpenseData>();
-        List<AggregateResult> dailyExpenses =  Database.query(
+        List<AggregateResult> dailyExpenses = Database.query(
             'SELECT SUM(Amount__c) sm, Type__c tp ' + 
             'FROM Expense__c ' +
             'WHERE Expense_Date__c = ' + FILTER_LITERALS.get(period) + 
