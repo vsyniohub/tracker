@@ -55,7 +55,7 @@ public class ExpenseListController {
     ** Method:   getAggregatedExpenses
     ** Description: 
     ** ********************************* */
-    @AuraEnabled(cacheable=true)
+    @AuraEnabled
     public static List<TrackerUtility.ChartExpenseData> getAggregatedExpenses(String period) {
         System.debug('Reached APEX ' + period);
         List<TrackerUtility.ChartExpenseData> dataSet = new List<TrackerUtility.ChartExpenseData>();
