@@ -12,7 +12,7 @@ public class ExpenseListController {
     public static final String DECIMAL_WHERE_CLAUSE = 'WHERE Amount__c = :searchAmountDecimal OR Subject__c like :likeClause OR Description__c like :likeClause';
     private static final String NO_CATEGORY = 'No Category';
     private static final Map<String, String> FILTER_LITERALS = new Map<String,String>{
-        'DAY'   => 'THIS_DAY',
+        'DAY'   => 'TODAY',
         'WEEK'  => 'THIS_WEEK',
         'MONTH' => 'THIS_MONTH',
         'YEAR'  => 'THIS_YEAR'

@@ -30,8 +30,7 @@ export default class MainGraphContainer extends LightningElement {
         this.chartData = 'Expenses Today';
         this.noDataCaption = 'Today';
 
-        this.resetAllButtons();
-        console.log(localStorage.getItem(localStorageFilterName));
+        this.resetAndDestroy();
         this.dailyChartSelectedState = true;
         this.retrieveDataAggregated();
     }
@@ -40,25 +39,23 @@ export default class MainGraphContainer extends LightningElement {
         this.chartData = 'Expenses This Week';
         this.noDataCaption = 'This Week';
         
-        this.resetAllButtons();
+        this.resetAndDestroy();
         this.weeklyChartSelectedState = true;
         this.retrieveDataAggregated();
-        localStorage.setItem(localStorageFilterName, this.filterName);
     }
     monthlyChartSelected(event) {
         this.filterName = 'MONTH';
         this.chartData = 'Expenses This Month';
         this.noDataCaption = 'This Month';
 
-        this.resetAllButtons();
+        this.resetAndDestroy();
         this.monthlyChartSelected = true;
         this.retrieveDataAggregated();
-        localStorage.setItem(localStorageFilterName, this.filterName);
     }
     retrieveDataAggregated() {
         getAggregatedExpenses({period: this.filterName})
         .then(dataRetrieved => {
-            console.log(dataRetrieved);
+            console.log('dataRetrieved from APEX : ' + JSON.stringify(dataRetrieved));
             if (typeof dataRetrieved !== 'undefined' && dataRetrieved.length > 0) {
                 var labelSet = [];
                 var dataSet = [];
@@ -79,27 +76,33 @@ export default class MainGraphContainer extends LightningElement {
     }
     generateChart(dataSet, labelSet) {
         let chartObject = this.template.querySelectorAll('canvas');
-            new Chart(chartObject, {
-                type: 'pie',
-                data: {
-                    labels:labelSet,
-                    datasets: [{
-                        label: "Spent",
-                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f", "#1155c2"],
-                        data: dataSet
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: this.chartLabel
-                    }
+        new Chart(chartObject, {
+            type: 'pie',
+            data: {
+                labels:labelSet,
+                datasets: [{
+                    label: "Spent",
+                    backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f", "#1155c2"],
+                    data: dataSet
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: this.chartLabel
                 }
-            });
+            }
+        });
     }
-    resetAllButtons() {
+    resetAndDestroy() {
         this.dailyChartSelectedState = false;
         this.weeklyChartSelectedState = false;
         this.monthlyChartSelectedState = false;
+
+        console.log('Destroying chart 1');
+        var chartObject = this.template.querySelectorAll('canvas').getContext("2d");
+        console.log('Destroying chart 2 ' + JSON.stringify(chartObject));
+        chartObject.destroy();
+        console.log('Destroying chart 3 ' + JSON.stringify(chartObject));
     }
 }
