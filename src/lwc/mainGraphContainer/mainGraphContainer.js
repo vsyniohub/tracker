@@ -53,9 +53,9 @@ export default class MainGraphContainer extends LightningElement {
         this.retrieveDataAggregated();
     }
     retrieveDataAggregated() {
-        getAggregatedExpenses({period: this.filterName})
-        .then(dataRetrieved => {
-            console.log('dataRetrieved from APEX : ' + JSON.stringify(dataRetrieved));
+        getAggregatedExpenses({
+            period: this.filterName
+        }).then(dataRetrieved => {
             if (typeof dataRetrieved !== 'undefined' && dataRetrieved.length > 0) {
                 var labelSet = [];
                 var dataSet = [];
@@ -69,8 +69,7 @@ export default class MainGraphContainer extends LightningElement {
             } else {
                 this.isData = false;
             }
-        })
-        .catch(error => {
+        }).catch(error => {
             console.log(error);
         });
     }
@@ -99,10 +98,9 @@ export default class MainGraphContainer extends LightningElement {
         this.weeklyChartSelectedState = false;
         this.monthlyChartSelectedState = false;
 
-        console.log('Destroying chart 1');
-        var chartObject = this.template.querySelectorAll('canvas').getContext("2d");
-        console.log('Destroying chart 2 ' + JSON.stringify(chartObject));
+        var chartObject = this.template
+            .querySelectorAll('canvas')
+            .getContext("2d");
         chartObject.destroy();
-        console.log('Destroying chart 3 ' + JSON.stringify(chartObject));
     }
 }
