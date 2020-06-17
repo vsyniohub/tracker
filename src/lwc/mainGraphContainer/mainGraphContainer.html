@@ -1,0 +1,34 @@
+<template>
+    <div class="slds-box slds-theme_default c-container" style="height: 552px;">
+        <div class="slds-button-group slds-m-bottom_x-small">
+            <lightning-button-group>
+                <lightning-button-icon 
+                    variant="border-filled"
+                    icon-name="utility:dayview" 
+                    selected={dailyChartSelectedState} 
+                    onclick={dailyChartSelected} 
+                    alternative-text="Daily"></lightning-button-icon>
+                <lightning-button-icon
+                    variant="border-filled"
+                    icon-name="utility:weeklyview" 
+                    selected 
+                    onclick={weeklyChartSelected} 
+                    alternative-text="Weekly"></lightning-button-icon>
+                <lightning-button-icon
+                    variant="border-filled"
+                    icon-name="utility:monthlyview" 
+                    selected={monthlyChartSelectedState} 
+                    onclick={monthlyChartSelected} 
+                    alternative-text="Monthly"></lightning-button-icon>
+            </lightning-button-group>
+        </div>
+        <div class="slds-box slds-box_x-small slds-theme_default">
+            <template if:true={isData}>
+                <canvas lwc:dom="manual" id="pie-chart" class="pie-chart" width="600" height="300"></canvas>
+            </template>
+            <template if:false={isData}>
+                <div class="slds-align_absolute-center">No data to display... {noDataCaption}</div>
+            </template>
+        </div>
+    </div>
+</template>
