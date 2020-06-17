@@ -12,6 +12,7 @@ export default class MainGraphContainer extends LightningElement {
     @track dailyChartSelectedState = false;
     @track weeklyChartSelectedState = false;
     @track monthlyChartSelectedState = false;
+    chartObject;
 
     localStorageFilterName = 'filterName';
     
@@ -74,8 +75,8 @@ export default class MainGraphContainer extends LightningElement {
         });
     }
     generateChart(dataSet, labelSet) {
-        let chartObject = this.template.querySelectorAll('canvas');
-        new Chart(chartObject, {
+        let chartElement = this.template.querySelectorAll('canvas');
+        this.chartObject = new Chart(chartElement, {
             type: 'pie',
             data: {
                 labels:labelSet,
@@ -92,15 +93,12 @@ export default class MainGraphContainer extends LightningElement {
                 }
             }
         });
+        console.log(this.chartObject);
     }
     resetAndDestroy() {
         this.dailyChartSelectedState = false;
         this.weeklyChartSelectedState = false;
         this.monthlyChartSelectedState = false;
-
-        var chartObject = this.template
-            .querySelectorAll('canvas')
-            .getContext("2d");
-        chartObject.destroy();
+        this.chartObject.destroy();
     }
 }
