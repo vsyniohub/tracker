@@ -2,8 +2,14 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "c/mainGraphContainer": [
-                "mainGraphContainer/mainGraphContainer.js"
+            "c/MainGraphContainer": [
+                "MainGraphContainer/MainGraphContainer.js"
+            ],
+            "c/organizerListWrapper": [
+                "organizerListWrapper/organizerListWrapper.js"
+            ],
+            "c/OrganizerListWrapper": [
+                "OrganizerListWrapper/OrganizerListWrapper.js"
             ]
         },
         "experimentalDecorators": true
