@@ -1,0 +1,38 @@
+<template>
+    <div class="slds-box slds-box_x-small">
+        <div class="slds-text-heading_medium" >
+            <lightning-input type="text" variant="label-hidden" label="Enter some text" placeholder="Type here..."></lightning-input>
+        </div>
+        <div class="slds-scrollable_y" style="max-height:300px;">
+            <template for:each={items} for:item="item">
+                <div key={item.id} class="slds-theme_default">
+                    <div class="slds-grid">
+                        <div class="slds-col slds-size_1-of-12 slds-p-vertical_xxx-small">
+                            <div class="slds-clearfix slds-p-around_xx-small">
+                                <lightning-input 
+                                    type="checkbox" 
+                                    label={noLabelValue} 
+                                    name="input1">
+                                </lightning-input>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_11-of-12 slds-p-vertical_xxx-small">
+                            <span onkeypress={itemCreateNext}>
+                            <lightning-input
+                                onchange={handleItemChange}
+                                data-id={item.id} 
+                                type="text" 
+                                variant="label-hidden"
+                                label={noLabelValue}>
+                            </lightning-input>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <div>
+           
+        </div>
+    </div>
+</template>
