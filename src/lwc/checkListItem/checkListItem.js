@@ -10,19 +10,16 @@ export default class CheckListItem extends LightningElement {
         'bold', 'italic', 'underline', 'list', 'indent',
         'image', 'clean', 'table', 'header', 'color'
     ];
+    sampleItem      = {
+        id : this.returnRandomId(),
+        label : this.richText
+    };
 
     /**
      * Track variables
      */
     @track items = [
-        {
-            id : this.returnRandomId(),
-            label : "Some"
-        },
-        {
-            id : this.returnRandomId(),
-            label : "Some"
-        }
+        this.sampleItem
     ];
 
     handleItemChange(event) {
@@ -43,11 +40,7 @@ export default class CheckListItem extends LightningElement {
     }
     injectItem(indexAt) {
         this.items.splice(
-            indexAt, 0, 
-            {
-                id : this.returnRandomId(),
-                label : "Some"
-            }
+            indexAt+1, 0, this.sampleItem
         );
     }
     returnRandomId() {
