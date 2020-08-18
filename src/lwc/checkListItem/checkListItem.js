@@ -6,10 +6,6 @@ export default class CheckListItem extends LightningElement {
      */
     noLabelValue    = " ";
     richText        = "";
-    formats         = [
-        'bold', 'italic', 'underline', 'list', 'indent',
-        'image', 'clean', 'table', 'header', 'color'
-    ];
     sampleItem      = {
         id : this.returnRandomId(),
         label : this.richText

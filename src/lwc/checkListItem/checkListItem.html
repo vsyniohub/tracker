@@ -7,8 +7,8 @@
             <template for:each={items} for:item="item">
                 <div key={item.id} class="slds-theme_default">
                     <div class="slds-grid">
-                        <div class="slds-col slds-size_1-of-12 slds-p-vertical_xxx-small">
-                            <div class="slds-clearfix slds-p-around_xx-small">
+                        <div class="slds-col slds-size_1-of-12 slds-var-p-vertical_xxx-small">
+                            <div class="slds-clearfix slds-var-p-around_xx-small">
                                 <lightning-input 
                                     type="checkbox" 
                                     label={noLabelValue} 
@@ -16,7 +16,7 @@
                                 </lightning-input>
                             </div>
                         </div>
-                        <div class="slds-col slds-size_11-of-12 slds-p-vertical_xxx-small">
+                        <div class="slds-col slds-size_11-of-12 slds-var-p-vertical_xxx-small">
                             <span onkeypress={itemCreateNext}>
                             <lightning-input
                                 onchange={handleItemChange}
