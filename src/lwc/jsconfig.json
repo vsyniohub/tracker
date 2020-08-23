@@ -2,11 +2,17 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "c/MainGraphContainer": [
-                "MainGraphContainer/MainGraphContainer.js"
+            "c/checkListItem": [
+                "checkListItem/checkListItem.js"
+            ],
+            "c/mainGraphContainer": [
+                "mainGraphContainer/mainGraphContainer.js"
             ],
             "c/organizerListWrapper": [
                 "organizerListWrapper/organizerListWrapper.js"
+            ],
+            "c/textNoteItem": [
+                "textNoteItem/textNoteItem.js"
             ],
             "c/OrganizerListWrapper": [
                 "OrganizerListWrapper/OrganizerListWrapper.js"
